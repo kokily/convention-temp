@@ -12,6 +12,7 @@ export const notices = sqliteTable("notices", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   title: text("title").notNull(),
   contentHtml: text("content_html").notNull(),
+  contentText: text("content_text").notNull().default(""),
   createdAt: text("created_at").notNull().default(now),
 });
 

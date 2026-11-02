@@ -1,0 +1,1 @@
+ALTER TABLE `notices` ADD `content_text` text DEFAULT '' NOT NULL;
