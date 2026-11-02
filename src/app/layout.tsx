@@ -13,8 +13,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "국방컨벤션 공지사항",
+  metadataBase: new URL("https://convention-temp.kr"),
+  title: {
+    default: "국방컨벤션 공지사항",
+    template: "%s | 국방컨벤션",
+  },
   description: "국방컨벤션 공지사항입니다",
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    siteName: "국방컨벤션",
+    title: "국방컨벤션 공지사항",
+    description: "국방컨벤션 공지사항입니다",
+    images: ["/og-default.png"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

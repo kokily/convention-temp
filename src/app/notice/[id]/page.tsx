@@ -1,8 +1,31 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { IMAGE_BASE, imageKeysIn } from "@/lib/s3";
 import { getAdjacent, getAttachments, getNotice } from "@/lib/notice";
 import { PageHeader } from "@/components/PageHeader";
 import { listQuery } from "@/lib/query";
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const id = Number((await params).id);
+  const notice = Number.isInteger(id) ? getNotice(id) : undefined;
+  if (!notice) return {};
+
+  const description = notice.contentText.replace(/\s+/g, " ").slice(0, 100) || "국방컨벤션 공지사항입니다";
+  const firstImage = imageKeysIn(notice.contentHtml)[0];
+
+  return {
+    title: notice.title,
+    description,
+    openGraph: {
+      type: "article",
+      title: notice.title,
+      description,
+      url: `/notice/${id}`,
+      images: [firstImage ? `${IMAGE_BASE}${firstImage}` : "/og-default.png"],
+    },
+  };
+}
 
 export default async function NoticeDetailPage({
   params,

@@ -1,5 +1,6 @@
 "use server";
 
+import type { AttachmentInput } from "@/lib/upload";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -10,7 +11,6 @@ import { cleanHtml, toPlainText } from "@/lib/html";
 import { getAttachments, getNotice } from "@/lib/notice";
 import { listQuery } from "@/lib/query";
 import { deleteObjects, imageKeysIn } from "@/lib/s3";
-import type { AttachmentInput } from "@/lib/upload";
 
 function refreshPages() {
   revalidatePath("/");
