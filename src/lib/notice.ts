@@ -1,7 +1,7 @@
 import "server-only";
 import { count, desc, eq, gt, asc, like, lt, or } from "drizzle-orm";
 import { db } from "@/db";
-import { notices } from "@/db/schema";
+import { attachments, notices } from "@/db/schema";
 
 export const PAGE_SIZE = 10;
 
@@ -35,4 +35,12 @@ export function getAdjacent(id: number) {
     prev: db.select(columns).from(notices).where(lt(notices.id, id)).orderBy(desc(notices.id)).limit(1).get(),
     next: db.select(columns).from(notices).where(gt(notices.id, id)).orderBy(asc(notices.id)).limit(1).get(),
   };
+}
+
+export function getAttachments(noticeId: number) {
+  return db.select().from(attachments).where(eq(attachments.noticeId, noticeId)).orderBy(asc(attachments.id)).all();
+}
+
+export function getAttachment(id: number) {
+  return db.select().from(attachments).where(eq(attachments.id, id)).get();
 }

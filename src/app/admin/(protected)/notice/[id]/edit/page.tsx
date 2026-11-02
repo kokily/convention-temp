@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
-import { getNotice } from "@/lib/notice";
+import { getAttachments, getNotice } from "@/lib/notice";
 import { NoticeForm } from "@/components/NoticeForm";
 
 export default async function EditNoticePage({
@@ -19,5 +19,13 @@ export default async function EditNoticePage({
 
   const page = Math.max(1, Number.parseInt((await searchParams).page ?? "1", 10) || 1);
 
-  return <NoticeForm id={notice.id} page={page} initialTitle={notice.title} initialHtml={notice.contentHtml} />;
+  return (
+    <NoticeForm
+      id={notice.id}
+      page={page}
+      initialTitle={notice.title}
+      initialHtml={notice.contentHtml}
+      initialFiles={getAttachments(notice.id)}
+    />
+  );
 }

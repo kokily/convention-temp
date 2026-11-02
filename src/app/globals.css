@@ -66,3 +66,7 @@ body {
   max-width: 100%;
   height: auto;
 }
+
+.notice-content img.ProseMirror-selectednode {
+  outline: 2px solid var(--color-brand);
+}

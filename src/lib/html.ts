@@ -1,5 +1,6 @@
 import "server-only";
 import sanitizeHtml from "sanitize-html";
+import { IMAGE_BASE } from "@/lib/s3";
 
 export function cleanHtml(html: string) {
   return sanitizeHtml(html, {
@@ -27,6 +28,7 @@ export function cleanHtml(html: string) {
       img: ["src", "alt"],
     },
     allowedSchemes: ["http", "https"],
+    exclusiveFilter: (frame) => frame.tag === "img" && !frame.attribs.src?.startsWith(IMAGE_BASE),
   });
 }
 

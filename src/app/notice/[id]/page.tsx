@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAdjacent, getNotice } from "@/lib/notice";
+import { getAdjacent, getAttachments, getNotice } from "@/lib/notice";
 import { PageHeader } from "@/components/PageHeader";
 import { listQuery } from "@/lib/query";
 
@@ -18,6 +18,7 @@ export default async function NoticeDetailPage({
   const { q, page } = await searchParams;
   const suffix = listQuery(q, page);
   const { prev, next } = getAdjacent(id);
+  const files = getAttachments(id);
 
   return (
     <main>
@@ -30,6 +31,19 @@ export default async function NoticeDetailPage({
           <dt className="w-24 bg-gray-50 px-4 py-3">등록일</dt>
           <dd className="px-4 py-3">{notice.createdAt.slice(0, 16)}</dd>
         </dl>
+
+        {files.length > 0 && (
+          <dl className="flex border-b border-gray-300 text-sm">
+            <dt className="w-24 shrink-0 bg-gray-50 px-4 py-3">첨부파일</dt>
+            <dd className="min-w-0 flex-1 space-y-1 px-4 py-3">
+              {files.map((file) => (
+                <a key={file.id} href={`/api/files/${file.id}`} className="block truncate hover:underline">
+                  {file.fileName}
+                </a>
+              ))}
+            </dd>
+          </dl>
+        )}
 
         <div
           className="notice-content min-h-48 break-words border-b border-gray-300 px-4 py-8"
