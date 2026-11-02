@@ -12,7 +12,7 @@ export default async function SchedulePage({ searchParams }: { searchParams: Pro
   const month = parseMonth((await searchParams).month);
 
   return (
-    <main>
+    <main className="flex flex-1 flex-col">
       <MonthCalendar month={month} today={todayKST()} items={getSchedules(month)} basePath="/schedule" />
     </main>
   );

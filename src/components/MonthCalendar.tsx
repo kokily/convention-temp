@@ -16,12 +16,12 @@ export function MonthCalendar({ month, today, items, basePath, onSelect }: Month
   const entries = Object.entries(items).sort(([a], [b]) => a.localeCompare(b));
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-8">
+    <section className="mx-auto w-full max-w-[1400px] px-4 py-8 lg:my-auto">
       <div className="mb-6 flex items-center justify-center gap-6">
         <Link href={`${basePath}?month=${shiftMonth(month, -1)}`} aria-label="이전 달" className="px-3 py-1 text-xl">
           ‹
         </Link>
-        <h2 className="text-2xl font-bold text-heading">
+        <h2 className="text-2xl font-bold text-heading lg:text-4xl">
           {year}년 {mon}월
         </h2>
         <Link href={`${basePath}?month=${shiftMonth(month, 1)}`} aria-label="다음 달" className="px-3 py-1 text-xl">
@@ -33,7 +33,7 @@ export function MonthCalendar({ month, today, items, basePath, onSelect }: Month
         {WEEK.map((w, i) => (
           <div
             key={w}
-            className={`border-b border-r border-gray-200 bg-gray-50 py-2 text-center text-sm font-bold ${
+            className={`border-b border-r border-gray-200 bg-gray-50 py-2 text-center text-sm font-bold lg:py-4 lg:text-lg ${
               i === 0 ? "text-red-600" : ""
             }`}
           >
@@ -47,22 +47,26 @@ export function MonthCalendar({ month, today, items, basePath, onSelect }: Month
           const body = (
             <>
               <time
-                className={`text-sm ${i % 7 === 0 ? "text-red-600" : ""} ${
+                className={`text-sm lg:text-base ${i % 7 === 0 ? "text-red-600" : ""} ${
                   date === today ? "font-bold text-brand" : ""
                 }`}
               >
                 {Number(date.slice(8))}
               </time>
-              <p className="mt-1 whitespace-pre-line break-all text-xs leading-5 sm:text-sm">{items[date]}</p>
+              <span className="mt-1 block w-full whitespace-pre-line break-all text-xs leading-5 sm:text-sm lg:text-base lg:leading-6">
+                {items[date]}
+              </span>
             </>
           );
-          const cell = "min-h-20 border-b border-r border-gray-200 p-1 text-left align-top sm:min-h-32 sm:p-2";
+
+          const cell =
+            "min-h-20 border-b border-r border-gray-200 p-1 text-left align-top sm:min-h-32 sm:p-2 lg:min-h-[175px] lg:p-3";
 
           return onSelect ? (
             <button
               key={date}
               type="button"
-              className={`${cell} cursor-pointer hover:bg-gray-50`}
+              className={`${cell} flex cursor-pointer flex-col items-start justify-start hover:bg-gray-50`}
               onClick={() => onSelect(date)}
             >
               {body}
