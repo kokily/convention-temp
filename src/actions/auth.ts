@@ -10,7 +10,7 @@ const failures = new Map<string, { count: number; resetAt: number }>();
 
 export async function login(_: string | null, formData: FormData) {
   const h = await headers();
-  const ip = h.get("cf-connecting-ip") ?? h.get("x-real-ip") ?? "local";
+  const ip = h.get("x-real-ip") ?? "local";
   const record = failures.get(ip);
 
   if (record && record.resetAt > Date.now() && record.count >= LIMIT) {
