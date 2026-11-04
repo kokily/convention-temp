@@ -16,7 +16,7 @@ export function MonthCalendar({ month, today, items, basePath, onSelect }: Month
   const entries = Object.entries(items).sort(([a], [b]) => a.localeCompare(b));
 
   return (
-    <section className="mx-auto w-full max-w-[1400px] px-4 py-8 lg:my-auto">
+    <section className="mx-auto w-full max-w-[1400px] px-4 py-8 lg:my-auto 2xl:max-w-none 2xl:px-10">
       <div className="mb-6 flex items-center justify-center gap-6">
         <Link href={`${basePath}?month=${shiftMonth(month, -1)}`} aria-label="이전 달" className="px-3 py-1 text-xl">
           ‹
@@ -53,7 +53,7 @@ export function MonthCalendar({ month, today, items, basePath, onSelect }: Month
               >
                 {Number(date.slice(8))}
               </time>
-              <span className="mt-1 block w-full whitespace-pre-line break-all text-xs leading-5 sm:text-sm lg:text-base lg:leading-6">
+              <span className="mt-1 block w-full whitespace-pre-line break-keep wrap-anywhere text-xs leading-5 sm:text-sm lg:text-base lg:leading-6">
                 {items[date]}
               </span>
             </>
