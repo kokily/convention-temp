@@ -59,8 +59,9 @@ export function MonthCalendar({ month, today, items, basePath, onSelect }: Month
             </>
           );
 
-          const cell =
-            "min-h-20 border-b border-r border-gray-200 p-1 text-left align-top sm:min-h-32 sm:p-2 lg:min-h-[175px] lg:p-3";
+          const cell = `min-h-20 border-b border-r border-gray-200 p-1 text-left align-top sm:min-h-32 sm:p-2 lg:min-h-[175px] lg:p-3 ${
+            date === today ? "ring-2 ring-inset ring-brand" : ""
+          }`;
 
           return onSelect ? (
             <button
