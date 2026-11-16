@@ -13,7 +13,11 @@ type MonthCalendarProps = {
 
 export function MonthCalendar({ month, today, items, basePath, onSelect }: MonthCalendarProps) {
   const [year, mon] = month.split("-");
-  const entries = Object.entries(items).sort(([a], [b]) => a.localeCompare(b));
+  const entries = Object.entries(items);
+
+  if (month === today.slice(0, 7) && !items[today]) entries.push([today, ""]);
+
+  entries.sort(([a], [b]) => a.localeCompare(b));
 
   return (
     <section className="mx-auto w-full max-w-[1400px] px-4 py-8 lg:my-auto 2xl:max-w-none 2xl:px-10">
@@ -84,11 +88,16 @@ export function MonthCalendar({ month, today, items, basePath, onSelect }: Month
         <ul className="divide-y divide-gray-200 border-y border-gray-200 sm:hidden">
           {entries.length === 0 && <li className="py-10 text-center text-sm text-gray-500">등록된 일정이 없습니다.</li>}
           {entries.map(([date, content]) => (
-            <li key={date} className="flex gap-4 py-3">
+            <li
+              key={date}
+              className={`flex gap-4 py-3 ${date === today ? "-mx-2 bg-brand/5 px-2 ring-2 ring-inset ring-brand" : ""}`}
+            >
               <time className={`w-14 shrink-0 font-bold ${date === today ? "text-brand" : ""}`}>
                 {date.slice(5).replace("-", ".")}
               </time>
-              <p className="whitespace-pre-line break-all text-sm">{content}</p>
+              <p className={`whitespace-pre-line break-all text-sm ${content ? "" : "text-gray-400"}`}>
+                {content || "일정 없음"}
+              </p>
             </li>
           ))}
         </ul>
